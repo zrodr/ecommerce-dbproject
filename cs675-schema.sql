@@ -1,11 +1,22 @@
+use csc775;
 
+create table if not exists Member (
+	member_id integer not null auto_increment,
+	password varchar(64) not null,
+	email varchar(64) not null,
+	create_date date not null,
+	points integer,
+	
+	cart_id integer not null,
+	
+	primary key (member_id)
+);
 create table if not exists Warehouse (
 	warehouse_id integer not null auto_increment,
 	name varchar(64) not null,
 	
 	primary key (warehouse_id)
 );
-
 create table if not exists Item (
 	item_id integer not null auto_increment,
 	name varchar(32) not null,
@@ -14,7 +25,6 @@ create table if not exists Item (
 	
 	primary key (item_id)
 );
-
 create table if not exists ItemInWarehouse (
 	item_id integer not null,
 	warehouse_id integer not null,
@@ -29,24 +39,9 @@ create table if not exists ShoppingCart (
 	cart_id integer not null auto_increment,
 	subtotal float,
 	member_id integer not null,
-	primary key (cart_id)
+	primary key (cart_id),
+    foreign key (member_id) references Member(member_id) on delete cascade
 );
-
-create table if not exists Member (
-	member_id integer not null auto_increment,
-	password varchar(64) not null,
-	email varchar(64) not null,
-	create_date date not null,
-	points integer,
-	
-	cart_id integer not null,
-	
-	primary key (member_id),
-	foreign key (cart_id) references ShoppingCart(cart_id) on delete cascade
-);
-
-ALTER TABLE ShoppingCart
-add foreign key (member_id) references Member(member_id) on delete cascade;
 
 create table if not exists Profile (
 	profile_id integer not null auto_increment,
@@ -75,6 +70,7 @@ create table if not exists TransactionRecord (
 	foreign key (member_id) references Member(member_id)
 );
 
+
 create table if not exists ItemInCart (
 	item_id integer not null,
 	cart_id integer not null,
@@ -84,4 +80,6 @@ create table if not exists ItemInCart (
 	foreign key (item_id) references Item(item_id),
 	foreign key (cart_id) references ShoppingCart(cart_id)
 );
+
+
 
