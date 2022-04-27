@@ -7,8 +7,6 @@ create table if not exists Member (
 	create_date date not null,
 	points integer,
 	
-	cart_id integer not null,
-	
 	primary key (member_id)
 );
 create table if not exists Warehouse (
