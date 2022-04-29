@@ -4,8 +4,25 @@
  */
  
  -- at least 2 queries: GROUP BY, HAVING, aggregates
+
+-- Get all items ordered by price (low to high & high to low)
+-- Low to High
+select i.name, i.description, i.price from Item i ORDER BY i.price ASC;
+-- High to Low
+select i.name, i.description, i.price from Item i ORDER BY i.price DESC;
+
+-- Get number of unique items in each warehouse, ordered by number of unique items, descending
+select w.name, COUNT(*) from ItemInWarehouse i, Warehouse w Where i.warehouse_id=w.warehouse_id GROUP BY i.warehouse_id ORDER BY COUNT(*) DESC;
  
- 
+-- Get number of profiles for each member
+Select m.member_id, COUNT(p.name) FROM Member m, Profile p WHERE m.member_id=p.member_id GROUP BY m.member_id;
+
+-- Get Number of items in each member's cart
+Select s.member_id, c.cart_id, COUNT(c.item_id) FROM ShoppingCart s, ItemInCart c WHERE s.cart_id=c.cart_id GROUP BY c.cart_id ORDER BY COUNT(c.item_id) DESC;
+
+-- Get total number of items in a member's cart
+ Select s.member_id, c.cart_id, SUM(c.quantity)  FROM ShoppingCart s, ItemInCart c WHERE s.cart_id=c.cart_id GROUP BY c.cart_id HAVING s.member_id=10;
+
  -- at least 2 nested queries: IN, op ANY, op ALL 
 
 -- user info for users with more than 5 past orders, oldest users first
