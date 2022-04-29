@@ -54,9 +54,18 @@ insert into Item (name, description, price) values
 
 insert into ItemInWarehouse (item_id, warehouse_id, units_in_stock) values
 (1, 1, 1000),
+(2, 1, 500),
+(3, 1, 550),
+(4, 1, 750),
 (2, 2, 5000),
+(2, 3, 100),
+(3, 2, 550),
+(4, 2, 480),
 (3, 3, 500),
-(4, 4, 784),
+(14, 4, 784),
+(2, 4, 2000),
+(3, 4, 600),
+(4, 4, 650),
 (5, 5, 950),
 (6, 6, 850),
 (7, 7, 7890),
@@ -88,10 +97,22 @@ insert into ShoppingCart (subtotal, member_id) values
 
 insert into ItemInCart (item_id, cart_id, quantity) values
    (1, 1, 2), 
+   (2, 1, 1), 
+   (3, 1, 6), 
+   (4, 1, 4), 
+   (5, 1, 2),
    (2, 2, 1), 
+   (3, 2, 6), 
+   (4, 2, 4), 
+   (5, 2, 2),
+   (2, 3, 1), 
    (3, 3, 6), 
    (4, 4, 4), 
    (5, 5, 2), 
+   (2, 5, 1), 
+   (3, 5, 6), 
+   (4, 5, 4), 
+   (5, 6, 2),
    (6, 6, 3), 
    (7, 7, 7), 
    (8, 8, 4), 
@@ -104,8 +125,16 @@ insert into ItemInCart (item_id, cart_id, quantity) values
    (15, 15, 4);
    
 insert into Profile (name, phone_number, street_name, city, state, zip_code, member_id) values 
-   ('Rikki Skinley', '202-640-2224', 'Schlimgen','Washington', 'DC', '20062', 1), 
-   ('Randy Paulmann', '330-647-4709', 'Bunting','Akron', 'OH', '44329', 2), 
+   ('Rikki Skinley', '202-640-2224', 'Schlimgen','Washington', 'DC', '20062', 1),
+   ('John Paulmann', '330-647-4709', 'Bunting','Akron', 'OH', '44329', 1), 
+   ('Stinky Doe', '806-273-5459', 'Harbort','Amarillo', 'TX', '79116', 1), 
+   ('TP Prestner', '812-254-4276', 'Fallview','Bloomington', 'IND', '47405', 1), 
+   ('Carmita Grisent', '310-420-7496', 'Garrison','Anaheim', 'CA', '92805', 1),
+   ('Randy Paulmann', '330-647-4709', 'Bunting','Akron', 'OH', '44329', 2),
+	('Stinky Carmita', '330-647-4709', 'Bunting','Akron', 'OH', '44329', 2), 
+   ('Grisent Eakens', '806-273-5459', 'Harbort','Amarillo', 'TX', '79116', 3), 
+   ('Eakens Prestner', '812-254-4276', 'Fallview','Bloomington', 'IND', '47405', 3), 
+   ('Carmita Bau', '310-420-7496', 'Garrison','Anaheim', 'CA', '92805', 2),
    ('Stinky Eakens', '806-273-5459', 'Harbort','Amarillo', 'TX', '79116', 3), 
    ('Noelle Prestner', '812-254-4276', 'Fallview','Bloomington', 'IND', '47405', 4), 
    ('Carmita Grisenthwaite', '310-420-7496', 'Garrison','Anaheim', 'CA', '92805', 5), 
@@ -135,7 +164,18 @@ insert into TransactionRecord (order_date, deliver_date, member_id) values
    ('2019-07-20','2019-07-26', 12), 
    ('2020-08-13','2020-08-18', 13), 
    ('2019-10-15','2019-10-21', 14), 
-   ('2020-01-18','2020-01-25', 15); 
+   ('2020-01-18','2020-01-25', 15),
+   ('2020-04-13','2020-04-18', 1), 
+   ('2019-12-05','2019-12-12', 1), 
+   ('2020-08-13','2020-08-23', 1),
+   ('2020-08-13','2020-08-15', 2), 
+   ('2019-10-15','2019-10-26', 2), 
+   ('2020-01-18','2020-01-15', 2),
+   ('2020-09-07','2020-09-30', 3), 
+   ('2020-08-02','2020-08-15', 5), 
+   ('2019-09-28','2019-10-12', 7), 
+   ('2020-12-07','2021-01-12', 4), 
+   ('2021-03-27','2021-03-24', 6); 
 
 
 
