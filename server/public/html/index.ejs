@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Home</title>
+</head>
+<body>
+    <main>
+        <p>Successfully connected to database!</p>
+        
+        <div id="queryResults">
+            <% if(Array.isArray(queryResults)) { %>
+                <ul>
+                    <% queryResults.forEach((result) => { %>
+                        <li> 
+                            <% for (const [key, value] of Object.entries(result)) { %>
+                                <div>
+                                    <%= key %> : <%= value %> 
+                                </div>
+                            <% } %>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>
+                    Your query has altered <%= queryResults.rowsAffected %> rows!
+                </p>
+            <% } %>
+        </div>
+    </main>
+</body>
+</html>

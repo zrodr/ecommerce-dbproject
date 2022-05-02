@@ -1,12 +1,29 @@
+/* 
+ * Node dependencies
+*/
+const path = require('path');
 const express = require('express');
 const app = express();
 require('dotenv').config()
 
-const DBController = require('./db/DBController')
+const { DBController, SQLConnectionError } = require('./db/DBController')
 
-let controller = new DBController();
+/* 
+ * Global Middleware
+*/
+app.use(express.static(path.join(__dirname, 'public')));
+
+/* 
+ * Set up ejs templating
+*/
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'public', 'html'));
+
+const controller = new DBController();
 
 app.get('/', async (req, res, next) => {
+    let queryResults;
+
     try {
         await controller.initDatabase(
             process.env.DB_USER,
@@ -14,7 +31,7 @@ app.get('/', async (req, res, next) => {
             process.env.DB_NAME,
         );
 
-        const exampleQuery1 = await controller.runQuery('select * from Item');
+        const exampleQuery1 = await controller.runQuery(`select * from Item`);
         console.log(exampleQuery1);
 
         const exampleQuery2 = await controller.runPreparedQuery(
@@ -22,17 +39,21 @@ app.get('/', async (req, res, next) => {
             500, 11, 13, 15
         );
         console.log(exampleQuery2);
+
+        queryResults = exampleQuery1;
     }
     catch (err) {
         return next(err);
     }
 
-    res.send('Successfully connected to DB!');
+    res.render('index', { queryResults });
 });
 
 app.use((err, req, res, next) => {
-    console.log(`[ERROR]: ${err.message}`);
-    res.send('Error occurred. Check server console for details.');
+    console.log(`[ERROR]: ${err.toString()}`);
+    let cause = err instanceof SQLConnectionError ? 'connecting to db' : 'running query';
+
+    res.send(`Error occurred while ${cause}. Check server console for details.`);
 });
 
 app.listen(3000, () => {
