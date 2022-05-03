@@ -1,0 +1,19 @@
+<div id="query-results">
+<% if(Array.isArray(queryResults)) { %>
+    <ul>
+    <% queryResults.forEach((result) => { %>
+        <li> 
+        <% for (const [key, value] of Object.entries(result)) { %>
+            <div>
+                <%= key %> : <%= value %> 
+            </div>
+        <% } %>
+        </li>
+    <% }); %>
+    </ul>
+<% } else { %>
+    <p>
+        Your query has altered <%= queryResults.rowsAffected %> rows!
+    </p>
+<% } %>
+</div>

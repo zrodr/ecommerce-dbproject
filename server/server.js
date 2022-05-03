@@ -4,14 +4,19 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-require('dotenv').config()
+require('dotenv').config();
 
-const { DBController, SQLConnectionError } = require('./db/DBController')
+/* 
+ * Custom dependencies
+ */
+const { DBHandlerInstance, SQLConnectionError } = require('./db/DBHandler');
+const { initDatabaseConnection, runQueryFromForm } = require('./middleware/db-util');
 
 /* 
  * Global Middleware
 */
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
 
 /* 
  * Set up ejs templating
@@ -19,26 +24,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public', 'html'));
 
-const controller = new DBController();
-
-app.get('/', async (req, res, next) => {
+/* 
+ * Routes
+ */
+app.get('/', initDatabaseConnection, async (req, res, next) => {
     let queryResults;
 
     try {
-        await controller.initDatabase(
-            process.env.DB_USER,
-            process.env.DB_PASSWORD,
-            process.env.DB_NAME,
-        );
+        const exampleQuery1 = await DBHandlerInstance.runQuery(`select * from Item`);
+        //console.log(exampleQuery1);
 
-        const exampleQuery1 = await controller.runQuery(`select * from Item`);
-        console.log(exampleQuery1);
-
-        const exampleQuery2 = await controller.runPreparedQuery(
+        const exampleQuery2 = await DBHandlerInstance.runPreparedQuery(
             'select * from Item where price < ? and item_id in (?, ?, ?)',
             500, 11, 13, 15
         );
-        console.log(exampleQuery2);
+        //console.log(exampleQuery2);
 
         queryResults = exampleQuery1;
     }
@@ -49,6 +49,18 @@ app.get('/', async (req, res, next) => {
     res.render('index', { queryResults });
 });
 
+const renderQueryView = (req, res, next) => {
+    const queryResults = req.queryResults;
+    res.render('queries', { queryResults });
+}
+
+app.route('/queries')
+    .get(initDatabaseConnection, renderQueryView)
+    .post(runQueryFromForm, renderQueryView);
+
+/* 
+ * Error handling
+ */
 app.use((err, req, res, next) => {
     console.log(`[ERROR]: ${err.toString()}`);
     let cause = err instanceof SQLConnectionError ? 'connecting to db' : 'running query';

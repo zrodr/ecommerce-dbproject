@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script defer src="/js/queries-event-funcs.js"></script>
+
+    <title>E-Commerce Home</title>
+</head>
+<body>
+    <main>
+        <form action="/queries" method="post" onsubmit="clearQueryResults()">
+            <div>
+                <label for="expensive-items">Most expensive items</label>
+                <input name="expensive-items" type="checkbox" onclick="checkSingleBox(this)">
+            </div>
+            <div>
+                <label for="well-stocked-items">Items in stock</label>
+                <input name="well-stocked-items" type="checkbox" onclick="checkSingleBox(this)">
+            </div>
+            <div>
+                <button type="submit"> See results </button>
+            </div>
+        </form>
+        
+        <% if (queryResults) { %>
+            <%- include('partials/query-results.ejs') %>
+        <% } %>
+    </main>
+</body>
+</html>

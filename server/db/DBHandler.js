@@ -14,8 +14,9 @@ class SQLQueryError extends Error {
     }
 }
 
-class DBController {
-    constructor() {
+class DBHandler {
+    constructor(user, password, database) {
+        this.credentials = [user, password, database]
         this.connection = null;
         this.hasInitialized = false;
     }
@@ -25,10 +26,11 @@ class DBController {
      * @param {string}  password    credentials for local mysql installation
      * @param {string}  database    database to connect to
     */
-    async initDatabase(user, password, database) {
+    async initDatabase() {
         if (this.hasInitialized) return;
 
         try {
+            const [user, password, database] = this.credentials;
             const connection = await mysql.createConnection({
                 host: 'localhost',
                 user,
@@ -81,4 +83,13 @@ class DBController {
     }
 }
 
-module.exports = { DBController, SQLConnectionError, SQLQueryError };
+/*
+ * Singleton instance for re-use across routes
+ */
+const DBHandlerInstance = new DBHandler(
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    process.env.DB_NAME,
+);
+
+module.exports = { DBHandlerInstance, SQLConnectionError, SQLQueryError };
