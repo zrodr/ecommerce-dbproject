@@ -15,8 +15,30 @@ const initDatabaseConnection = async (req, res, next) => {
 }
 
 /*
+ * Receives values to insert from frontend form. Appends the query results (on insert, 
+ * a ResultSetHeader object) to the request object to render on the page.
+ */
+const insertNewItem = async (req, res, next) => {
+    const { name, description, price } = req.body;
+    
+    let results;
+    try {
+        results = await DBHandlerInstance.runPreparedQuery(
+            `insert into Item (name, description, price) values (?,?,?)`,
+            name, description, price
+        );
+    } catch (err) {
+        next(err);
+    }
+
+    req.queryResults = results;
+    return next();
+}
+
+/*
  * Receives data from frontend form through the request object and runs a
- * query based on that selection. Appends the query results to the request  * object to use when rendering the 'queries' view 
+ * query based on that selection. Appends the query results to the request  
+ * object to use when rendering the 'queries' view 
  */
 const runQueryFromForm = async (req, res, next) => {
     const formData = req.body;
@@ -40,6 +62,24 @@ const runQueryFromForm = async (req, res, next) => {
                 select iw.item_id from ItemInWarehouse iw 
                 where iw.item_id = i.item_id and
                 iw.units_in_stock >= 500
+            )
+            `;
+            break;
+        case 'multiple-purchases':
+            sql = `
+            select p.name, m.email, m.points, m.create_date from Profile p 
+            inner join Member m on p.member_id = m.member_id 
+            where 3 < any (
+                select count(*) from TransactionRecord tr where tr.member_id = p.member_id
+            )
+            order by m.create_date
+            `;
+            break;
+        case 'non-queued-items':
+            sql = `
+            select i.price, i.name from Item i
+            where i.item_id not in (
+                select ic.item_id from ItemInCart ic where i.item_id = ic.item_id 
             )
             `;
             break;
@@ -107,9 +147,9 @@ const runQueryFromForm = async (req, res, next) => {
             GROUP BY c.cart_id
             `;
             break;
-            default:
-                sql = 'select * from Item';
-                break;
+        default:
+            sql = 'select * from Item';
+            break;
     }
 
     let results;
@@ -125,4 +165,4 @@ const runQueryFromForm = async (req, res, next) => {
     return next();
 }
 
-module.exports = { initDatabaseConnection, runQueryFromForm };
+module.exports = { initDatabaseConnection, insertNewItem, runQueryFromForm };
