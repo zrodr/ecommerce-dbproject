@@ -53,3 +53,12 @@ where i.item_id in (
     where iw.item_id = i.item_id and
     iw.units_in_stock >= 500
 );
+
+-- Total aggregate cost of goods in each unique warehouse using the view
+SELECT
+	warehouse_name, 
+    COUNT(item_name) AS Number_Of_Unique_Items, 
+    SUM(warehouse_item_cost) AS Total_Warehouse_Item_Cost 
+FROM v_item_warehouse_price_cost 
+GROUP BY warehouse_name 
+ORDER BY warehouse_name ASC;
