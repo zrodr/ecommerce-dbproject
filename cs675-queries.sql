@@ -25,10 +25,10 @@ Select s.member_id, c.cart_id, COUNT(c.item_id) FROM ShoppingCart s, ItemInCart 
 
  -- at least 2 nested queries: IN, op ANY, op ALL 
 
--- user info for users with more than 5 past orders, oldest users first
+-- user info for users with more than 3 past orders, oldest users first
 select p.name, m.email, m.points, m.create_date from Profile p 
 inner join Member m on p.member_id = m.member_id 
-where 5 < any (
+where 3 < any (
     select count(*) from TransactionRecord tr where tr.member_id = p.member_id
 )
 order by m.create_date;
