@@ -21,7 +21,7 @@ Select m.member_id, COUNT(p.name) FROM Member m, Profile p WHERE m.member_id=p.m
 Select s.member_id, c.cart_id, COUNT(c.item_id) FROM ShoppingCart s, ItemInCart c WHERE s.cart_id=c.cart_id GROUP BY c.cart_id ORDER BY COUNT(c.item_id) DESC;
 
 -- Get total number of items in a member's cart
- Select s.member_id, c.cart_id, SUM(c.quantity)  FROM ShoppingCart s, ItemInCart c WHERE s.cart_id=c.cart_id GROUP BY c.cart_id HAVING s.member_id=10;
+ Select s.member_id, c.cart_id, SUM(c.quantity) as 'Total Number of Items' FROM ShoppingCart s, ItemInCart c WHERE s.cart_id=c.cart_id GROUP BY c.cart_id HAVING s.member_id=10;
 
  -- at least 2 nested queries: IN, op ANY, op ALL 
 

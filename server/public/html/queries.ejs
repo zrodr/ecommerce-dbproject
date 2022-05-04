@@ -13,12 +13,75 @@
     <main>
         <form action="/queries" method="post" onsubmit="clearQueryResults()">
             <div>
-                <label for="expensive-items">Most expensive items</label>
-                <input name="expensive-items" type="checkbox" onclick="checkSingleBox(this)">
+                <p>View Data of Tables</p>
+                <div>
+                    <label for="member-table">Member Table</label>
+                    <input name="member-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="warehouse-table">Warehouse Table</label>
+                    <input name="warehouse-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="item-table">Item Table</label>
+                    <input name="item-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="item-in-warehouse-table">ItemInWarehouse Table</label>
+                    <input name="item-in-warehouse-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="shopping-cart-table">ShoppingCart Table</label>
+                    <input name="shopping-cart-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="profile-table">Profile Table</label>
+                    <input name="profile-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="transaction-record-table">TransactionRecord Table</label>
+                    <input name="transaction-record-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="item-in-cart-table">ItemInCart Table</label>
+                    <input name="item-in-cart-table" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
             </div>
             <div>
-                <label for="well-stocked-items">Items in stock</label>
-                <input name="well-stocked-items" type="checkbox" onclick="checkSingleBox(this)">
+                <p>Aggregate Queries</p>
+                <div>
+                    <label for="items-by-price-low-high">Items Ordered by Price (Low to High)</label>
+                    <input name="items-by-price-low-high" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="items-by-price-high-low">Items Ordered by Price (High to Low)</label>
+                    <input name="items-by-price-high-low" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="unique-items-in-warehouse">Number of Unique Items in Each Warehouse</label>
+                    <input name="unique-items-in-warehouse" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="member-num-profiles">Number of Profiles for Each Member</label>
+                    <input name="member-num-profiles" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="member-num-unique-items">Number of Unique Items in Member's Cart</label>
+                    <input name="member-num-unique-items" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="member-num-total-items">Total Number of Items in Member's Cart</label>
+                    <input name="member-num-total-items" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <p>Nested Queries</p>
+                <div>
+                    <label for="expensive-items">Most expensive items</label>
+                    <input name="expensive-items" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="well-stocked-items">Items in stock</label>
+                    <input name="well-stocked-items" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
             </div>
             <div>
                 <button type="submit"> See results </button>
