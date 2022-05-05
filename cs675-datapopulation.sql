@@ -1,7 +1,5 @@
 
--- Entities
-
-insert into member (password, email, create_date, points) values
+insert into Member (password, email, create_date, points) values
    ('muQ7Cl5mglFJ', 'lmushet0@tamu.edu','2020-08-14', 99), 
    ('aacfepWwwG', 'efourman1@forbes.com','2020-03-13', 49), 
    ('CS3myVisIu7', 'fdalligan2@blog.com','2019-11-05', 96), 
@@ -175,12 +173,4 @@ insert into TransactionRecord (order_date, deliver_date, member_id) values
    ('2020-08-02','2020-08-15', 5), 
    ('2019-09-28','2019-10-12', 7), 
    ('2020-12-07','2021-01-12', 4), 
-   ('2021-03-27','2021-03-24', 6); 
-
-
-
-
--- relationship tables
-
-
-
+   ('2021-03-27','2021-03-24', 6);
