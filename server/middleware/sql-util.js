@@ -1,4 +1,5 @@
-const { DBHandlerInstance } = require('../db/DBHandler');
+const { DBHandlerInstance } = require('../db/config'); // this file assumes that the type of DBHandlerInstance is MySQLDBHandler
+
 /* 
  * Will ensure that database connection is initialized once and only once, 
  * no matter which page is visited first.
@@ -18,7 +19,7 @@ const initDatabaseConnection = async (req, res, next) => {
  * Receives values to insert from frontend form. Appends the query results (on insert, 
  * a ResultSetHeader object) to the request object to render on the page.
  */
-const insertNewItem = async (req, res, next) => {
+const insertNewItemSQL = async (req, res, next) => {
     const { name, description, price } = req.body;
     
     let results;
@@ -40,11 +41,11 @@ const insertNewItem = async (req, res, next) => {
  * query based on that selection. Appends the query results to the request  
  * object to use when rendering the 'queries' view 
  */
-const runQueryFromForm = async (req, res, next) => {
+const runQueryFromFormSQL = async (req, res, next) => {
     const formData = req.body;
     const querySelection = Object.keys(formData)[0];
     let sql = ''
-    console.log(querySelection);
+
     switch (querySelection) {
         case 'expensive-items':
             sql = `
@@ -157,7 +158,6 @@ const runQueryFromForm = async (req, res, next) => {
         results = await DBHandlerInstance.runQuery(sql);
     }
     catch (err) {
-        console.log(err);
         return next(err);
     }
             
@@ -165,4 +165,4 @@ const runQueryFromForm = async (req, res, next) => {
     return next();
 }
 
-module.exports = { initDatabaseConnection, insertNewItem, runQueryFromForm };
+module.exports = { initDatabaseConnection, insertNewItemSQL, runQueryFromFormSQL };
