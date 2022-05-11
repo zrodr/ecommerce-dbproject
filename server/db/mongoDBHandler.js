@@ -3,6 +3,7 @@ const DBHandler = require('./DBHandler').DBHandler;
 const { ConnectionError, QueryError } = require('./error');
 
 const Item = require('../models/Item');
+const Member = require('../models/Member');
 
 class MongoDBHandler extends DBHandler {
     /*
@@ -86,6 +87,32 @@ class MongoQueries {
         this.namedQueries.set('items-by-price-high-low', async function() {
             try {
                 return await Item.find({}).sort({ price: -1 }).lean();
+            } 
+            catch (err) {
+                throw new QueryError(err.message);
+            }
+        });
+        this.namedQueries.set('items-by-price-low-high', async function() {
+            try {
+                return await Item.find({}).sort({ price: 1 }).lean();
+            } 
+            catch (err) {
+                throw new QueryError(err.message);
+            }
+        });
+        this.namedQueries.set('top-5-member-points', async function() {
+            try {
+                return await Member.find({}).sort({ points: -1 }).limit(5).lean();
+            } 
+            catch (err) {
+                throw new QueryError(err.message);
+            }
+        });
+        this.namedQueries.set('loyal-customers', async function() {
+            try {
+                // customers who have had accounts since before 2020
+                return await Member.find({ create_date: {$lt: '2020-01-01'}})
+                    .sort({ create_date: 1 }).limit(5).lean();
             } 
             catch (err) {
                 throw new QueryError(err.message);

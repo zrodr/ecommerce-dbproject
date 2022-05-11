@@ -14,14 +14,24 @@
         <% if (mongoServer) { %>
             <form action="/" method="post" onsubmit="clearQueryResults()">
                 <p>MongoDB Queries</p>
+                <p>Simple Aggregates</p>
+
                 <div>
                     <label for="items-by-price-high-low">All items (price: high to low)</label>
                     <input name="items-by-price-high-low" type="checkbox" onclick="checkSingleBox(this)">
                 </div>
-                <!-- <div>
-                    <label for="member-most-points">5 members with the most points</label>
-                    <input name="member-most-points" type="checkbox" onclick="checkSingleBox(this)">
-                </div> -->
+                <div>
+                    <label for="items-by-price-low-high">All items (price: low to high)</label>
+                    <input name="items-by-price-low-high" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="top-5-member-points">Top 5 point amount amongst members</label>
+                    <input name="top-5-member-points" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
+                <div>
+                    <label for="loyal-customers">Top 5 oldest accounts (pre-2020)</label>
+                    <input name="loyal-customers" type="checkbox" onclick="checkSingleBox(this)">
+                </div>
                 <div>
                     <button type="submit"> See results </button>
                 </div>
