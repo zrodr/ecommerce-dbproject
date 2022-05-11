@@ -10,18 +10,11 @@ require('dotenv').config();
  * Custom dependencies
  */
 const { ConnectionError } = require('./db/error');
-if (process.env.MONGO) {
-    // inheritance allows us to reuse this function across both DB handlers
-    var { initDatabaseConnection } = require('./middleware/sql-util'); 
-    var { insertNewItemMongo, runQueryFromFormMongo } = require('./middleware/mongo-util');
-}
-else {
-    var { 
-        initDatabaseConnection, 
-        runQueryFromFormSQL, 
-        insertNewItemSQL 
-    } = require('./middleware/sql-util');
-}
+const { 
+    initDatabaseConnection, 
+    runQueryFromForm, 
+    insertNewItem 
+} = require('./middleware/db-util');
 
 /* 
  * Global Middleware
@@ -39,31 +32,24 @@ app.set('views', path.join(__dirname, 'public', 'html'));
  * Routes
  */
 const renderQueryView = (req, res, next) => {
+    const mongoServer = process.env.MONGO ? true : false;
     const queryResults = req.queryResults;
-    res.render('queries', { queryResults });
+
+    res.render('queries', { mongoServer, queryResults });
 }
 
-if (process.env.MONGO) {
-    app.route('/')
-        .get(initDatabaseConnection, renderQueryView)
-        .post(runQueryFromFormMongo, renderQueryView);
+app.route('/')
+    .get(initDatabaseConnection, renderQueryView)
+    .post(runQueryFromForm, renderQueryView);
 
-    app.post('/new-item', insertNewItemMongo, renderQueryView);
-}
-else { // using default mysql connection
-    app.route('/')
-        .get(initDatabaseConnection, renderQueryView)
-        .post(runQueryFromFormSQL, renderQueryView);
-
-    app.post('/new-item', insertNewItemSQL, renderQueryView);
-}
+app.post('/new-item', insertNewItem, renderQueryView);
 
 /* 
  * Error handling
  */
 app.use((err, req, res, next) => {
     console.log(`[ERROR]: ${err.toString()}`);
-    let cause = err instanceof ConnectionError ? 'connecting to db' : 'running query';
+    const cause = err instanceof ConnectionError ? 'connecting to db' : 'running query';
 
     res.send(`Error occurred while ${cause}. Check server console for details.`);
 });

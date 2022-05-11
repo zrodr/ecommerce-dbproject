@@ -4,64 +4,6 @@ const { ConnectionError, QueryError } = require('./error');
 
 const Item = require('../models/Item');
 
-/* 
- * Wrapper class for a map of < 'name', handler function > to handle running queries against 
- * mongo atlas
- */
-class MongoQueries {
-    constructor() {
-        this.namedQueries = new Map();
-
-        this.#addQuery('all items', async function() {
-            let items;
-
-            try {
-                items = await Item.find({}).sort({ price: -1 }).lean();
-            } 
-            catch (err) {
-                throw new QueryError(err.message);
-            }
-
-            return items;
-        });
-
-        this.#addQuery('insert item', async function(name, description, price) {
-            let results;
-
-            // increment item_id according to current max
-            const [ item ] = await Item.find({}).sort({ item_id: -1 }).limit(1).lean();
-
-            try {
-                results = await Item.create({
-                    item_id: item.item_id + 1,
-                    name,
-                    description,
-                    price
-                });
-            } 
-            catch (err) {
-                throw new QueryError(err.message);
-            }
-
-            return results;
-        });
-    }
-
-    /* 
-     * @param   {string}                name of query in Map
-     * @return  {function | undefined}  handler function for the requested query
-     */
-    getQueryByName(name) {
-        return this.namedQueries.get(name);
-    }
-
-    #addQuery(name, handlerFunction) {
-        if (this.namedQueries.has(name)) return;
-
-        this.namedQueries.set(name, handlerFunction);
-    }
-}
-
 class MongoDBHandler extends DBHandler {
     /*
      * @param { object:         credentials for mongo atlas
@@ -88,7 +30,7 @@ class MongoDBHandler extends DBHandler {
         this.hasInitialized = true;
         this.connection = mongoose.connection;
 
-        this.connection.once('open', () => { console.log('connected to mongodb'); });
+        this.connection.once('open', () => { console.log('connected to mongo atlas'); });
         this.connection.once('error', () => { mongoose.disconnect(); });
     }
 
@@ -104,15 +46,59 @@ class MongoDBHandler extends DBHandler {
             throw new QueryError(`'${queryName}' query not yet supported!`)
         }
 
-        let results;
         try {
-            results = handlerFunction(...args);
+            return handlerFunction(...args);
         }
         catch(err) { // QueryError thrown from handler functions
             throw err;
         }
+    }
+}
 
-        return results;
+/* 
+ * Wrapper class for a map of < 'name', handler function > to handle running queries against 
+ * mongo atlas
+ */
+class MongoQueries {
+    constructor() {
+        this.namedQueries = new Map();
+
+        this.namedQueries.set('insert-item', async function(name, description, price) {
+            // increment item_id according to current max
+            const [ item ] = await Item.find({}).sort({ item_id: -1 }).limit(1).lean();
+            
+            try {
+                return await Item.create({
+                    item_id: item.item_id + 1,
+                    name,
+                    description,
+                    price
+                });
+            } 
+            catch (err) {
+                throw new QueryError(err.message);
+            }
+        });
+
+        /* 
+         * Aggregate queries
+         */
+        this.namedQueries.set('items-by-price-high-low', async function() {
+            try {
+                return await Item.find({}).sort({ price: -1 }).lean();
+            } 
+            catch (err) {
+                throw new QueryError(err.message);
+            }
+        });
+    }
+
+    /* 
+     * @param   {string}                name of query in Map
+     * @return  {function | undefined}  handler function for the requested query
+     */
+    getQueryByName(name) {
+        return this.namedQueries.get(name);
     }
 }
 

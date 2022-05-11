@@ -5,7 +5,11 @@ function clearQueryResults() {
     }
 }
 
+/* 
+ * @param {HTMLElement}  checkbox   input that is currently selected  
+ */
 function checkSingleBox(checkbox) {
+    // 'query selection' form will always be first on the queries page
     const form = document.getElementsByTagName('form')[0];
     const checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
