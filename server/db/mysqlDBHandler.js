@@ -80,6 +80,11 @@ class SQLQueries {
             `insert into Item (name, description, price) values (?,?,?)`
         );
 
+        // View 
+        this.namedQueries.set('total-of-warehouse-items', 
+            `select * from V_Item_Warehouse_Price_Cost`
+        );
+
         /* 
          * Aggregate queries
          */

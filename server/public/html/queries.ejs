@@ -40,6 +40,12 @@
             <form action="/" method="post" onsubmit="clearQueryResults()">
                 <p>MySQL Queries</p>
                 <div>
+                    <p>DB View:</p>
+                    <div>
+                        <label for="total-of-warehouse-items">Total cost of items in each warehouse</label>
+                        <input name="total-of-warehouse-items" type="checkbox" onclick="checkSingleBox(this)">
+                    </div>
+                    
                     <p>View Data of Tables</p>
                     <div>
                         <label for="member-table">Member Table</label>
