@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Open+Sans&display=swap");
+
+:root {
+    --baseColor: white;
+    --htmlFontSize: 18px;
+
+    --bodyBackgroundColor: hsl(200, 5%, 89%);
+    --bodyColor: var(--baseColor);
+    --bodyFontFamily: "Open Sans";
+    --bodyFontFamilyFallback: sans-serif;
+    --bodyFontSize: 1.0rem;
+    --bodyFontWeight: 400;
+    --bodyLineHeight: 1.5;
+
+    --formGap: 0.875rem;
+    --anchorColor: #eee;
+
+    --borderRadius: 0.25rem;
+    --color: #eee;
+
+    --inputBackgroundColor: #3b4148;
+    --inputHoverBackgroundColor: #434a52;
+
+    --labelBackgroundColor: #363b41;
+
+    --submitBackgroundColor: #44984b;
+    --submitColor: #eee;
+    --submitHoverBackgroundColor: #66dc62;
+}
+        
+.grid {
+    position: absolute;
+    margin-inline: auto;
+    max-inline-size: 150vh;
+    position: inherit;
+    padding-right: 6vh;
+    margin-top: 1vh;
+    padding-top: 1vh;
+    margin-bottom: 10vh;
+    min-width: 500px;
+    background-color: #4c5259;
+    opacity: 0.99;
+    border-radius: 15px 15px 15px 15px;
+    -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+}
+    
+/* helpers/hidden.css */
+    
+.hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+     
+/* layout/base.css */
+    
+* {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: var(--htmlFontSize);
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-color: var(--bodyBackgroundColor);
+    color: var(--bodyColor);
+    font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+    font-size: var(--bodyFontSize);
+    font-weight: var(--bodyFontWeight);
+    line-height: var(--bodyLineHeight);
+    margin-top: 1vh;
+    min-block-size: 100vh;
+    padding-top: 1vh;
+    padding-bottom: 5%;
+}
+
+/* modules/form.css */
+
+h1 {
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    color: inherit;
+    font-family: inherit;
+    font-size: 260%;
+} 
+
+h3 {
+    font-family: "Inter", sans-serif;
+    text-align: center;
+    color: inherit;
+    font-family: inherit;
+    font-size: 150%;
+}
+
+button {
+    background-image: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.query-form {
+    padding-bottom: 3vh;
+    justify-content: center;
+    text-align: center;
+}
+
+.form {
+    display: grid;
+    justify-content: center;
+    border-radius: 10px 10px 10px 10px;
+    padding: 50px;
+    width: 100%;
+    gap: var(--formGap);
+    padding-bottom: 5%;
+}
+
+button {
+    inline-size: 100%;
+}
+
+.form input[type="checkbox"],
+.form label {
+    inline-size: 40%;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-data {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+input {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+}
+
+/* modules/lobby.css */
+
+.queries {
+    color: var(--color);
+}
+
+.queries label,
+.queries input[type="checkbox"],
+button {
+    border-radius: var(--borderRadius);
+    padding: 1rem;
+}
+
+.queries label, 
+.queries input[type="checkbox"]  {
+    background-color: var(--labelBackgroundColor);
+    color: white;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding-inline: 1.25rem;
+}
+
+button {
+    background-color: var(--submitBackgroundColor);
+    color: var(--submitColor);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+button:focus,
+button:hover {
+    background-color: var(--submitHoverBackgroundColor);
+}

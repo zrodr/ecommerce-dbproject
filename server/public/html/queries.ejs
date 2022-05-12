@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script defer src="/js/queries-event-funcs.js"></script>
+    <link rel="stylesheet" href="/css/forms.css" />
 
-    <title>E-Commerce Home</title>
+    <title>E-Commerce Website Home Page</title>
 </head>
 <body>
     <main>
         <% if (mongoServer) { %>
             <form action="/" method="post" onsubmit="clearQueryResults()">
-                <p>MongoDB Queries</p>
-                <p>Simple Aggregates</p>
+                <h1>MongoDB Queries</h1>
+                <h3>Select Which Aggregate Query You Would Like to Run:</h3>
 
                 <div>
                     <label for="items-by-price-high-low">All items (price: high to low)</label>
@@ -33,117 +34,123 @@
                     <input name="loyal-customers" type="checkbox" onclick="checkSingleBox(this)">
                 </div>
                 <div>
-                    <button type="submit"> See results </button>
+                    <button type="submit"> View Results </button>
                 </div>
             </form>
         <% } else { %>
-            <form action="/" method="post" onsubmit="clearQueryResults()">
-                <p>MySQL Queries</p>
-                <div>
-                    <p>View Data of Tables</p>
-                    <div>
-                        <label for="member-table">Member Table</label>
-                        <input name="member-table" type="checkbox" onclick="checkSingleBox(this)">
+            <div class="grid">
+                <form class="form queries" action="/" method="post" onsubmit="clearQueryResults()">
+                    <h1>MySQL Queries</h1>
+                    <div class="query-form">
+                        <h3>Select Table Data You Would Like to View :</h3>
+                        <div class="table-data">
+                            <label for="member-table">Member Table</label>
+                            <input name="member-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="warehouse-table">Warehouse Table</label>
+                            <input name="warehouse-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="item-table">Item Table</label>
+                            <input name="item-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="item-in-warehouse-table">ItemInWarehouse Table</label>
+                            <input name="item-in-warehouse-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="shopping-cart-table">ShoppingCart Table</label>
+                            <input name="shopping-cart-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="profile-table">Profile Table</label>
+                            <input name="profile-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="transaction-record-table">TransactionRecord Table</label>
+                            <input name="transaction-record-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="item-in-cart-table">ItemInCart Table</label>
+                            <input name="item-in-cart-table" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
                     </div>
-                    <div>
-                        <label for="warehouse-table">Warehouse Table</label>
-                        <input name="warehouse-table" type="checkbox" onclick="checkSingleBox(this)">
+                    <div class="query-form">
+                        <h3>Select Which Aggregate Query You Would Like to Run:</h3>
+                        <div class="table-data">
+                            <label for="items-by-price-low-high">Items Ordered by Price (Low to High)</label>
+                            <input name="items-by-price-low-high" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="items-by-price-high-low">Items Ordered by Price (High to Low)</label>
+                            <input name="items-by-price-high-low" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="unique-items-in-warehouse">Number of Unique Items in Each Warehouse</label>
+                            <input name="unique-items-in-warehouse" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="member-num-profiles">Number of Profiles for Each Member</label>
+                            <input name="member-num-profiles" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="member-num-unique-items">Number of Unique Items in Member's Cart</label>
+                            <input name="member-num-unique-items" type="checkbox" onclick="checkSingleBox(this)">
+                        </div>
+                        <div class="table-data">
+                            <label for="member-num-total-items">Total Number of Items in Member's Cart</label>
+                            <input name="member-num-total-items" type="checkbox" onclick="checkSingleBox(this)">
+                        </div class="table-data">
                     </div>
-                    <div>
-                        <label for="item-table">Item Table</label>
-                        <input name="item-table" type="checkbox" onclick="checkSingleBox(this)">
+                    <div class="query-form">
+                        <h3>Select Which Nested Query You Would Like to Run:</h3>
+                            <div class="table-data">
+                                <label for="expensive-items">Most expensive items</label>
+                                <input name="expensive-items" type="checkbox" onclick="checkSingleBox(this)">
+                            </div>
+                            <div class="table-data">
+                                <label for="well-stocked-items">Well-stocked items(>500 units)</label>
+                                <input name="well-stocked-items" type="checkbox" onclick="checkSingleBox(this)">
+                            </div>
+                            <div class="table-data">
+                                <label for="multiple-purchases">Loyal customers</label>
+                                <input name="multiple-purchases" type="checkbox" onclick="checkSingleBox(this)">
+                            </div>
+                            <div class="table-data">
+                                <label for="non-queued-items">Items without a place to go</label>
+                                <input name="non-queued-items" type="checkbox" onclick="checkSingleBox(this)">
+                            </div>
+                        </div>
+                    <div class="query-form">
+                        <button type="submit"> View Results </button>
                     </div>
-                    <div>
-                        <label for="item-in-warehouse-table">ItemInWarehouse Table</label>
-                        <input name="item-in-warehouse-table" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="shopping-cart-table">ShoppingCart Table</label>
-                        <input name="shopping-cart-table" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="profile-table">Profile Table</label>
-                        <input name="profile-table" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="transaction-record-table">TransactionRecord Table</label>
-                        <input name="transaction-record-table" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="item-in-cart-table">ItemInCart Table</label>
-                        <input name="item-in-cart-table" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                </div>
-                <div>
-                    <p>Aggregate Queries</p>
-                    <div>
-                        <label for="items-by-price-low-high">Items Ordered by Price (Low to High)</label>
-                        <input name="items-by-price-low-high" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="items-by-price-high-low">Items Ordered by Price (High to Low)</label>
-                        <input name="items-by-price-high-low" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="unique-items-in-warehouse">Number of Unique Items in Each Warehouse</label>
-                        <input name="unique-items-in-warehouse" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="member-num-profiles">Number of Profiles for Each Member</label>
-                        <input name="member-num-profiles" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="member-num-unique-items">Number of Unique Items in Member's Cart</label>
-                        <input name="member-num-unique-items" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="member-num-total-items">Total Number of Items in Member's Cart</label>
-                        <input name="member-num-total-items" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <p>Nested Queries</p>
-                    <div>
-                        <label for="expensive-items">Most expensive items</label>
-                        <input name="expensive-items" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="well-stocked-items">Well-stocked items(>500 units)</label>
-                        <input name="well-stocked-items" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="multiple-purchases">Loyal customers</label>
-                        <input name="multiple-purchases" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                    <div>
-                        <label for="non-queued-items">Items without a place to go</label>
-                        <input name="non-queued-items" type="checkbox" onclick="checkSingleBox(this)">
-                    </div>
-                </div>
-                <div>
-                    <button type="submit"> See results </button>
-                </div>
-            </form>
+                </form>
+            </div>
         <% } %>
-
-        <form action="/new-item" method="post" onsubmit="clearQueryResults()">
-            <div>
-                <label for="name">Item name:</label>
-                <input name="name" type="text" value="Name of product">
-            </div>
-            <div>
-                <label for="description">Description:</label>
-                <input name="description" type="text" value="Description of product">
-            </div>
-            <div>
-                <label for="price">Price:</label>
-                <input name="price" type="number" 
-                    min="0.99" max="5000.0" step="1.0">
-            </div>
-            <button type="submit">List your item</button>
-        </form>
-        
+        <div class="grid">
+            <form class="form queries" action="/new-item" method="post" onsubmit="clearQueryResults()">
+                <div class="table-data"> 
+                    <label for="name">Item Name:</label>
+                    <input name="name" type="text" value="Name of product">
+                </div>
+                <div class="table-data">
+                    <label for="description">Description:</label>
+                    <input name="description" type="text" value="Description of product">
+                </div>
+                <div class="table-data">
+                    <label for="price">Price:</label>
+                    <input name="price" type="number" 
+                        min="0.99" max="5000.0" step="1.0">
+                </div>
+                <br>
+                <button type="submit">List Your Item</button>
+            </form>
         <% if (queryResults) { %>
             <%- include('partials/query-results.ejs') %>
         <% } %>
+        </div>
+
     </main>
 </body>
 </html>
