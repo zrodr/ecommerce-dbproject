@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script defer src="/js/queries-event-funcs.js"></script>
+    <link rel="stylesheet" href="forms.css" />
 
     <title>E-Commerce Home</title>
 </head>
@@ -13,8 +14,8 @@
     <main>
         <% if (mongoServer) { %>
             <form action="/" method="post" onsubmit="clearQueryResults()">
-                <p>MongoDB Queries</p>
-                <p>Simple Aggregates</p>
+                <h1>MongoDB Queries</h1>
+                <h3>Simple Aggregates:</h3><br>
 
                 <div>
                     <label for="items-by-price-high-low">All items (price: high to low)</label>
@@ -37,16 +38,16 @@
                 </div>
             </form>
         <% } else { %>
-            <form action="/" method="post" onsubmit="clearQueryResults()">
-                <p>MySQL Queries</p>
+            <form class="form" action="/" method="post" onsubmit="clearQueryResults()">
+                <h1>MySQL Queries</h1>
                 <div>
-                    <p>DB View:</p>
+                    <h3>DB View :</h3>
                     <div>
                         <label for="total-of-warehouse-items">Total cost of items in each warehouse</label>
                         <input name="total-of-warehouse-items" type="checkbox" onclick="checkSingleBox(this)">
                     </div>
                     
-                    <p>View Data of Tables</p>
+                    <h3>View Data of Tables :</h3>
                     <div>
                         <label for="member-table">Member Table</label>
                         <input name="member-table" type="checkbox" onclick="checkSingleBox(this)">
@@ -81,7 +82,7 @@
                     </div>
                 </div>
                 <div>
-                    <p>Aggregate Queries</p>
+                    <h3>Aggregate Queries :</h3>
                     <div>
                         <label for="items-by-price-low-high">Items Ordered by Price (Low to High)</label>
                         <input name="items-by-price-low-high" type="checkbox" onclick="checkSingleBox(this)">
@@ -106,7 +107,7 @@
                         <label for="member-num-total-items">Total Number of Items in Member's Cart</label>
                         <input name="member-num-total-items" type="checkbox" onclick="checkSingleBox(this)">
                     </div>
-                    <p>Nested Queries</p>
+                    <h3>Nested Queries :</h3>
                     <div>
                         <label for="expensive-items">Most expensive items</label>
                         <input name="expensive-items" type="checkbox" onclick="checkSingleBox(this)">
@@ -123,24 +124,24 @@
                         <label for="non-queued-items">Items without a place to go</label>
                         <input name="non-queued-items" type="checkbox" onclick="checkSingleBox(this)">
                     </div>
-                </div>
+                </div><br>
                 <div>
-                    <button type="submit"> See results </button>
+                    <button type="submit"> See results </button><br><br><br><br>
                 </div>
             </form>
         <% } %>
 
-        <form action="/new-item" method="post" onsubmit="clearQueryResults()">
+        <form class="form" action="/new-item" method="post" onsubmit="clearQueryResults()">
             <div>
-                <label for="name">Item name:</label>
-                <input name="name" type="text" value="Name of product">
+                <label for="name">Item name </label>
+                <input name="name" type="text" placeholder="Name of product">
             </div>
             <div>
-                <label for="description">Description:</label>
-                <input name="description" type="text" value="Description of product">
+                <label for="description">Description </label>
+                <input name="description" type="text" placeholder="Description of product">
             </div>
             <div>
-                <label for="price">Price:</label>
+                <label for="price">Price      </label>
                 <input name="price" type="number" 
                     min="0.99" max="5000.0" step="1.0">
             </div>
